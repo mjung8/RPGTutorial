@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
+    public LayerMask solidObjectsLayer;
 
     public bool isMoving;
 
@@ -36,14 +38,15 @@ public class PlayerController : MonoBehaviour
                 targetPos.x += input.x;
                 targetPos.y += input.y;
 
-                StartCoroutine(Move(targetPos));
+                if (IsWalkable(targetPos))
+                    StartCoroutine(Move(targetPos));
             }
         }
 
         animator.SetBool("isMoving", isMoving);
     }
 
-    IEnumerator Move (Vector3 targetPos)
+    IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
 
@@ -56,5 +59,15 @@ public class PlayerController : MonoBehaviour
         transform.position = targetPos;
 
         isMoving = false;
+    }
+
+    private bool IsWalkable(Vector3 targetPos)
+    {
+        if (Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer) != null)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
