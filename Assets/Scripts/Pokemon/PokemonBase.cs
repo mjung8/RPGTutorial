@@ -44,6 +44,9 @@ public class PokemonBase : ScriptableObject
     [SerializeField]
     private int speed;
 
+    [SerializeField]
+    List<LearnableMove> learnableMoves;
+
     public string Name { get => name; }
 
     public string Description { get => name; }
@@ -68,6 +71,22 @@ public class PokemonBase : ScriptableObject
 
     public int Speed { get => speed; }
 
+    public List<LearnableMove> LearnableMoves { get => learnableMoves; }
+
+}
+
+[System.Serializable]
+public class LearnableMove
+{
+    [SerializeField]
+    private MoveBase moveBase;
+
+    [SerializeField]
+    private int level;
+
+    public MoveBase MoveBase { get => moveBase; }
+
+    public int Level { get => level; }
 }
 
 public enum PokemonType
