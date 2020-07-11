@@ -14,10 +14,19 @@ public class BattleHud : MonoBehaviour
     [SerializeField]
     private HPBar hpBar;
 
+    private Pokemon pokemon;
+
     public void SetData(Pokemon pokemon)
     {
+        this.pokemon = pokemon;
+
         nameText.text = pokemon.PokemonBase.Name;
         levelText.text = "Lvl " + pokemon.Level;
         hpBar.SetHP((float)pokemon.HP / pokemon.MaxHp);
+    }
+
+    public IEnumerator UpdateHP()
+    {
+        yield return hpBar.SetHPSmooth((float)pokemon.HP / pokemon.MaxHp);
     }
 }
