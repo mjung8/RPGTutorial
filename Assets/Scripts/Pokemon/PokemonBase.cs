@@ -106,5 +106,49 @@ public enum PokemonType
     Bug,
     Rock,
     Ghost,
-    Dragon
+    Dragon,
+    Dark,
+    Steel
+}
+
+public class TypeChart
+{
+    static float one = 1f;
+    static float two = 2f;
+    static float haf = 0.5f;
+    static float zro = 0f;
+
+    static float[][] chart =
+    {
+        //            NOR  FIR  WAT  ELE  GRA  ICE  FIG  POI  GRO  FLY  PSY  BUG  ROC  GHO  DRA  DRK  STL
+        new float[] { one, one, one, one, one, one, one, one, one, one, one, one, haf, zro, one, one, haf },
+        new float[] { one, haf, haf, one, two, two, one, one, one, one, one, two, haf, one, haf, one, two },
+        new float[] { one, two, haf, two, haf, one, one, one, two, one, one, one, two, one, haf, one, one },
+        new float[] { one, one, two, haf, haf, two, one, one, zro, two, one, one, one, one, haf, one, one },
+        new float[] { one, haf, two, two, haf, one, one, haf, two, haf, one, haf, two, one, haf, one, haf },
+        new float[] { one, haf, haf, one, two, haf, one, one, two, two, one, one, one, one, two, one, haf },
+        new float[] { two, one, one, one, one, two, one, haf, one, haf, haf, haf, two, zro, one, two, two },
+        new float[] { one, one, one, one, two, one, one, haf, haf, one, one, one, haf, haf, one, one, zro },
+        new float[] { one, two, one, two, haf, one, one, two, one, zro, one, haf, two, one, one, one, two },
+        new float[] { one, one, one, haf, two, one, two, one, one, one, one, two, haf, one, one, one, haf },
+        new float[] { one, one, one, one, one, one, two, two, one, one, haf, one, one, one, one, zro, haf },
+        new float[] { one, haf, one, one, two, one, haf, haf, one, haf, two, one, one, haf, one, two, haf },
+        new float[] { one, two, one, one, one, two, haf, one, haf, two, one, two, one, one, one, one, haf },
+        new float[] { zro, one, one, one, one, one, one, one, one, one, two, one, one, two, one, haf, haf },
+        new float[] { one, one, one, one, one, one, one, one, one, one, one, one, one, one, two, one, haf },
+        new float[] { one, one, one, one, one, one, haf, one, one, one, two, one, one, two, one, haf, haf },
+        new float[] { one, haf, haf, haf, one, two, one, one, one, one, one, one, two, one, one, one, haf }
+    };
+
+    public static float GetEffectiveness(PokemonType attackType, PokemonType defenseType)
+    {
+        if (attackType == PokemonType.None || defenseType == PokemonType.None)
+            return 1f;
+
+        int row = (int)attackType - 1;
+        int col = (int)defenseType - 1;
+
+        return chart[row][col];
+    }
+
 }
