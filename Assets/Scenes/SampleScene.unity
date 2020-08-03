@@ -1241,6 +1241,12 @@ MonoBehaviour:
     level: 7
   - pokemonBase: {fileID: 11400000, guid: 8015cb09dffb0fb4999e84304dc026da, type: 2}
     level: 3
+  - pokemonBase: {fileID: 11400000, guid: 8015cb09dffb0fb4999e84304dc026da, type: 2}
+    level: 2
+  - pokemonBase: {fileID: 11400000, guid: 8015cb09dffb0fb4999e84304dc026da, type: 2}
+    level: 5
+  - pokemonBase: {fileID: 11400000, guid: 8015cb09dffb0fb4999e84304dc026da, type: 2}
+    level: 6
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
