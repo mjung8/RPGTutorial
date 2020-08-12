@@ -10,6 +10,13 @@ public class BattleUnit : MonoBehaviour
     [SerializeField]
     private bool isPlayerUnit;
 
+    [SerializeField]
+    private BattleHud hud;
+    
+    public bool IsPlayerUnit { get => isPlayerUnit;  }
+
+    public BattleHud Hud { get => hud; }
+
     public Pokemon Pokemon { get; set; }
 
     private Image image;
@@ -31,6 +38,8 @@ public class BattleUnit : MonoBehaviour
             image.sprite = Pokemon.PokemonBase.BackSprite;
         else
             image.sprite = Pokemon.PokemonBase.FrontSprite;
+
+        hud.SetData(pokemon);
 
         image.color = originalColor;
 
