@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 [System.Serializable]
 public class Pokemon
@@ -24,7 +25,11 @@ public class Pokemon
     // pokemon moves can be boosted 6 levels so -6 to +6
     public Dictionary<Stat, int> StatBoosts { get; private set; }
 
+    public Condition Status { get; private set; }
+
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
+
+    public bool HpChanged { get; set; }
 
     public void Init()
     {
@@ -141,14 +146,21 @@ public class Pokemon
         float d = a * move.MoveBase.Power * ((float)attack / defense) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
 
-        HP -= damage;
-        if (HP <= 0)
-        {
-            HP = 0;
-            damageDetails.Fainted = true;
-        }
+        UpdateHP(damage);
 
         return damageDetails;
+    }
+
+    public void UpdateHP(int damage)
+    {
+        HP = Mathf.Clamp(HP - damage, 0, MaxHp);
+        HpChanged = true;
+    }
+
+    public void SetStatus(ConditionID conditionId)
+    {
+        Status = ConditionsDB.Conditions[conditionId];
+        StatusChanges.Enqueue($"{pokemonBase.Name} {Status.StartMessage}");
     }
 
     public Move GetRandomMove()
@@ -156,6 +168,11 @@ public class Pokemon
         int r = Random.Range(0, Moves.Count);
 
         return Moves[r];
+    }
+
+    public void OnAfterTurn()
+    {
+        Status?.OnAfterTurn?.Invoke(this);
     }
 
     public void OnBattleOver()
